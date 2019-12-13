@@ -6,6 +6,7 @@ from .models import Phone
 
 
 class PhoneAdmin(admin.ModelAdmin):
+    readonly_fields = ['image_tag']
     list_display = ('name', 'quantity', 'price')
 
 
