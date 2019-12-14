@@ -37,7 +37,7 @@ class Phone(models.Model):
     item_price.short_description = 'Ціна'
 
     def image_tag(self):
-        return mark_safe(f"""<img src="/{self.image}" width="150" height="150" />""")
+        return mark_safe(f"""<img src="/{self.image}" width="150" height="200" />""")
 
     def __str__(self):
         return self.name

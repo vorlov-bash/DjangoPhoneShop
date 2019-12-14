@@ -196,24 +196,24 @@
 </div>
 <script type="text/javascript">
 
-    $('.top_menu_item.header_profile').mouseenter(function(){
+    $('.top_menu_item.header_profile').mouseenter(function () {
         $('#head1').show();
     });
-    $('.top_menu_item.header_profile').mouseleave(function(){
+    $('.top_menu_item.header_profile').mouseleave(function () {
         $('#head1').hide();
     });
 
 
-    $('.top_menu_item.header_help').mouseenter(function(){
+    $('.top_menu_item.header_help').mouseenter(function () {
         $('#head2').show();
     });
-    $('.top_menu_item.header_help').mouseleave(function(){
+    $('.top_menu_item.header_help').mouseleave(function () {
         $('#head2').hide();
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('.product-status.product__sales').on('click', function(){
+        $('.product-status.product__sales').on('click', function () {
             if ($('.product-status__text').text() === 'Купить') {
                 $('.msg').toggle();
             }
@@ -221,9 +221,9 @@
 
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('.close_button').on('click', function(){
+        $('.close_button').on('click', function () {
             console.log($(this).before());
             $('.msg').hide();
         });
