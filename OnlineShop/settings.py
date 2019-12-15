@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-
+import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -54,8 +54,7 @@ ROOT_URLCONF = 'OnlineShop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,14 +75,13 @@ WSGI_APPLICATION = 'OnlineShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'OnlineShop',
-        'USER': 'volodya',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'POST': ''
+        'NAME': 'dakl1bv40johsn',
+        'USER': 'teraamhaexvygl',
+        'PASSWORD': '736f4d030e9694779bc65fe6fe32fc6c33176b623e96018e456ba013d0cdd0af',
+        'HOST': 'ec2-107-21-108-37.compute-1.amazonaws.com',
+        'POST': '5432'
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

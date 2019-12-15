@@ -24,5 +24,9 @@
         <option name="ITERATION_ELEMENTS_WRAPPING" value="chop_down_if_not_single" />
       </formatting-settings>
     </DBN-SQL>
+    <codeStyleSettings language="HTML">
+      <option name="RIGHT_MARGIN" value="200" />
+      <option name="WRAP_ON_TYPING" value="1" />
+    </codeStyleSettings>
   </code_scheme>
 </component>

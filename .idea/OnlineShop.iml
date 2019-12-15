@@ -23,7 +23,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../OnlineShop\templates" />
+        <option value="$MODULE_DIR$/main/templates" />
       </list>
     </option>
   </component>
