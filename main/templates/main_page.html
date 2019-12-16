@@ -86,6 +86,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>120$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="fas fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -127,6 +131,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>139$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -170,6 +178,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>99$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -211,6 +223,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>219$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -260,7 +276,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>120$</strong>
                                 </h4>
-
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
                             </div>
                             <!--Card content-->
 
@@ -301,6 +320,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>139$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -344,6 +367,57 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>99$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
+
+                            </div>
+                            <!--Card content-->
+
+                        </div>
+                        <!--Card-->
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg"
+                                     class="card-img-top" alt="">
+                                <a>
+                                    <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                                </a>
+                            </div>
+                            <!--Card image-->
+
+                            <!--Card content-->
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <a href="" class="grey-text">
+                                    <h5>Sport wear</h5>
+                                </a>
+                                <h5>
+                                    <strong>
+                                        <a href="" class="dark-grey-text">Grey blouse
+                                            <span class="badge badge-pill primary-color">bestseller</span>
+                                        </a>
+                                    </strong>
+                                </h5>
+
+                                <h4 class="font-weight-bold blue-text">
+                                    <strong>99$</strong>
+                                </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -385,6 +459,10 @@
                                 <h4 class="font-weight-bold blue-text">
                                     <strong>219$</strong>
                                 </h4>
+                                <button type="button" class="btn btn-info btn-rounded">Купити</button>
+                                <a class="btn-floating btn-lg btn-red"
+                                   style="background-color: red;"><i
+                                        class="far fa-heart white-text"></i></a>
 
                             </div>
                             <!--Card content-->
@@ -397,6 +475,7 @@
 
                 </div>
                 <!--Grid row-->
+
 
             </section>
             <!--Section: Products v.3-->
@@ -446,39 +525,7 @@
 {% endblock %}
 <script type="text/javascript">
 
-    $('.top_menu_item.header_profile').mouseenter(function () {
-        $('#head1').show();
-    });
-    $('.top_menu_item.header_profile').mouseleave(function () {
-        $('#head1').hide();
-    });
 
-
-    $('.top_menu_item.header_help').mouseenter(function () {
-        $('#head2').show();
-    });
-    $('.top_menu_item.header_help').mouseleave(function () {
-        $('#head2').hide();
-    });
-
-    $(document).ready(function () {
-
-        $('.product-status.product__sales').on('click', function () {
-            if ($('.product-status__text').text() === 'Купить') {
-                $('.msg').toggle();
-            }
-        });
-
-    });
-
-    $(document).ready(function () {
-
-        $('.close_button').on('click', function () {
-            console.log($(this).before());
-            $('.msg').hide();
-        });
-
-    });
 
 </script>
 </body>
