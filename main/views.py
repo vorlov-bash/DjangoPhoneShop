@@ -6,8 +6,14 @@ from .models import Phone
 
 def item_list(request):
     data = Phone.objects.all()
+    print(data)
     return render(request, 'main_page.html', {'data': data})
 
 
 def test(request):
     return render(request, 'test.html')
+
+
+def product(request, id):
+    phone = Phone.objects.get(id=id)
+    return render(request, 'product.html', {'phone': phone})

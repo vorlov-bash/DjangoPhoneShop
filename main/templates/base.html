@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Font Awesome -->
@@ -53,7 +53,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 {% block body %}{% endblock %}
 </body>
@@ -106,7 +105,6 @@
         });
 
         $('.btn-floating').click(function (e) {
-            console.log($(`${this}.fas`).length);
             if ($(`${this}.fas`).length) {
                 $(`${this}.far`).removeClass('fas').addClass('far')
             } else {
