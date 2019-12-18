@@ -3,7 +3,4 @@ front/
 staticfiles/
 __pycache__/
 .idea/
-**/migrations/**
-!**/migrations
-!**/migrations/__init__.py
 db.sqlite3
