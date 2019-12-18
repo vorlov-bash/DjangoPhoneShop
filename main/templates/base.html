@@ -43,8 +43,7 @@
                         </div>
                     </div>
                     <div class="header-menu_item" data-reactid="26">
-                        <a href="" class="top_menu_item" style="text-decoration: none"><i class="fas fa-heart"></i>
-                            Избранное</a>
+                        <a href="" class="top_menu_item" style="text-decoration: none"><i class="fas fa-heart header-heart"></i>Избранное</a>
                     </div>
                     {#                    <span class="header_quantity">4</span>#}
                     <a href="/basket/" class="header_basket" data-reactid="30"><i class="fas fa-shopping-cart"></i><span
@@ -58,75 +57,6 @@
 </body>
 <script type="text/javascript">
 
-    $('#profile').mouseenter(function () {
-        $('#head1').show();
-    });
-    $('#profile,#head1').mouseleave(function () {
-        $('#head1').hide();
-    });
 
-
-    $('#help').mouseenter(function () {
-        $('#head2').show();
-    });
-    $('#help,#head2').mouseleave(function () {
-        $('#head2').hide();
-    });
-
-    $(document).ready(function () {
-
-        $('.product-status.product__sales').on('click', function () {
-            if ($('.product-status__text').text() === 'Купить') {
-                $('.msg').toggle();
-            }
-        });
-
-    });
-
-    $(document).ready(function () {
-
-        $('.close_button').on('click', function () {
-            console.log($(this).before());
-            $('.msg').hide();
-        });
-
-    });
-    $(document).ready(function () {
-
-        $('.product-status.product__sales').on('click', function () {
-            if ($('.product-status__text').text() === 'Купить') {
-                $('.msg').toggle();
-            }
-        });
-
-        $('.close_button').on('click', function () {
-            console.log($(this).before());
-            $('.msg').hide();
-        });
-
-        $('.btn-floating').click(function (e) {
-            if ($(`${this}.fas`).length) {
-                $(`${this}.far`).removeClass('fas').addClass('far')
-            } else {
-                $(`${this}.far`).removeClass('far').addClass('fas')
-            }
-        });
-
-        $('.top_menu_item.header_profile').mouseenter(function () {
-            $('#head1').show();
-        });
-        $('.top_menu_item.header_profile').mouseleave(function () {
-            $('#head1').hide();
-        });
-
-
-        $('.top_menu_item.header_help').mouseenter(function () {
-            $('#head2').show();
-        });
-        $('.top_menu_item.header_help').mouseleave(function () {
-            $('#head2').hide();
-        });
-
-    });
 </script>
 </html>

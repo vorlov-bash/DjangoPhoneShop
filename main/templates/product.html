@@ -38,6 +38,16 @@
             visibility: visible;
             transition: all .1s;
         }
+
+        button.active {
+            background: #DD2B4C;
+            color: #fff
+        }
+        div.active{
+            background: rgba(0,128,0,0.77);
+            color: white;
+        }
+
     </style>
 {% endblock %}
 {% block body %}
@@ -57,7 +67,8 @@
                         <div class="pd_left-column pd__left product-view-edited">
                             <div class="photo_section photo_section--reverse product-view-photo_section">
                                 <div class="pd_main-photo">
-                                    <img src="{% static 'img/4abd99f940056a106e76d30d6cee7e2e.jpeg' %}" style="border: 1px solid grey">
+                                    <img src="{{ phone.image }}"
+                                         style="margin-top: 90px">
                                 </div>
 
                             </div>
@@ -69,7 +80,7 @@
                                         <div class="wrap-product-price">
                                             <div class="pd__product-price-new">
                                                 <meta itemprop="price" content="349">
-                                                <span>349</span>грн
+                                                <span>{{ phone.price }}</span>грн
                                             </div>
 
                                         </div>
@@ -192,11 +203,22 @@
         </div>
     </div>
     <script>
-    $(document).ready(function () {
-        $('.buy').click(function () {
-            $(this).find('span').html('<i class="fas fa-check-circle"></i>').fadeIn(2000);
-            $(this).css({'background': '#DD2B4C', 'color': '#fff'})
+        $(document).ready(function () {
+            $('.buy').click(function () {
+                let old = '<span>КУПИТЬ</span>';
+                if (!$(this).hasClass('active')) {
+                    $(this).addClass('active');
+                    $(this).find('span').html('<i class="fas fa-check-circle"></i>').hide().fadeIn('slow');
+                } else {
+                    $(this).removeClass('active');
+                    $(this).find('span').hide().text('КУПИТЬ').fadeIn('slow');
+                }
+
+            });
+            $('.size_item').click(function () {
+                $('.size_item').removeClass('active disabled');
+                $(this).addClass('active disabled');
+            })
         })
-    })
     </script>
 {% endblock %}

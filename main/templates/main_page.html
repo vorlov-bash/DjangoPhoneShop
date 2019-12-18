@@ -6,37 +6,28 @@
     <div class="msg">
         <div class="msg_item info-msg ">
             <div class="msg_item-wrap">
-                <div>S
+                <div>
                     <div class="msg_title">Товар был добавлен в корзину<span class="close_button">x</span></div>
                     <div class="msg_content">
                         <div class="msg_product">
                             <div class="msg_product-content">
-                                <div class="msg_product-img"><img
-                                        src="/imgw/loc/153x213/uploads/product_image/2019/11/41/92d44947a3e33d1a5052d81cd048d4c2.jpg">
+                                <div class="msg_product-img"><img src="">
                                 </div>
                                 <div class="msg_product-info">
-                                    <div class="msg_product-name">Майка Трикомир</div>
-                                    <div class="msg_product-size"><!-- react-text: 11148 -->Размер: <!-- /react-text -->
-                                        <!-- react-text: 11149 -->56<!-- /react-text --></div>
-                                    <div class="msg_product-qua"><!-- react-text: 11151 -->Кол-во: <!-- /react-text -->
-                                        <!-- react-text: 11152 -->1<!-- /react-text --><!-- react-text: 11153 --> шт.
-                                        <!-- /react-text --></div>
-                                    <div class="msg_product-price"><!-- react-text: 11155 -->Цена: <!-- /react-text -->
-                                        <!-- react-text: 11156 -->66<!-- /react-text --><!-- react-text: 11157 --> грн
-                                        <!-- /react-text --></div>
+                                    <div class="msg_product-name"></div>
+                                    <div class="msg_product-qua">Кол-во: 1шт.</div>
+                                    <div class="msg_product-price">Цена: <span></span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="btn btn--make-order ">Оформить заказ</div>
-                        <div class="">
-                            <div class="make-order-all">
-                                <div class="btn btn--make-order ">Оформить всё (6)</div>
-                            </div>
-                        </div>
+                        <a href="/cart" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="favo" style="position: fixed; right: 9%; top: 20%; visibility: hidden">
+        <i class="fas fa-heart fa-3x red-text"></i>
     </div>
     <main>
         <div class="container">
@@ -78,8 +69,11 @@
                                     <h4>
                                         <strong>{{ product.price }}грн.</strong>
                                     </h4>
-                                    <button type="button" class="btn btn-info btn-rounded">Купити</button>
-                                    <a class="btn-floating btn-lg btn-red" style="background-color: red;" data-id="{{ product.id }}">
+                                    <button type="button" class="btn btn-info btn-rounded text"
+                                            style="font-weight: bold">Купить
+                                    </button>
+                                    <a class="btn-floating btn-lg btn-red" style="background-color: red;"
+                                       data-id="{{ product.id }}">
                                         <i class="far fa-heart white-text" data-id="{{ product.id }}"></i></a>
                                 </div>
                                 <!--Card content-->
@@ -91,60 +85,65 @@
                 </div>
             </section>
             <!--Section: Products v.3-->
-
-            <!--Pagination-->
-            <nav class="d-flex justify-content-center wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
-                <ul class="pagination pg-blue">
-
-                    <!--Arrow left-->
-                    <li class="page-item disabled">
-                        <a class="page-link waves-effect waves-effect" href="#" aria-label="Previous">
-                            <span aria-hidden="true">«</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-
-                    <li class="page-item active">
-                        <a class="page-link waves-effect waves-effect" href="#">1
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" href="#">5</a>
-                    </li>
-
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" href="#" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
             <!--Pagination-->
 
         </div>
     </main>
     <script type="text/javascript">
         $(document).ready(function () {
+            // favorites //
             $('.btn-floating').click(function (event) {
                 let id = $(this).attr('data-id');
                 let heart = $(`.fa-heart[data-id=${id}]`);
-                if(heart.hasClass('fas')){
+                if (heart.hasClass('fas')) {
                     heart.removeClass('fas').addClass('far')
-                }else {
-                    heart.removeClass('far').addClass('fas')
+                } else {
+                    heart.removeClass('far').addClass('fas');
+                    if ($(document).scrollTop() > 80) {
+                        $('.favo').css('visibility', 'visible').fadeOut(0).fadeIn(300).delay(300).fadeOut(300);
+                    } else {
+                        $('.header-heart').addClass('red-text').fadeOut(0).fadeIn(100).delay(300).fadeOut(0).fadeIn(100).fadeOut(0, function () {
+                            $(this).removeClass('red-text');
+                            $(this).fadeIn(100)
+                        });
+                    }
                 }
-            })
+
+            });
+            // //
+            // cart window //
+            $('.btn-info').on('click', function () {
+                let cart = $(this).parents().eq(2);
+                let name = cart.find('a.dark-grey-text').text();
+                let price = cart.find('h4 strong').text();
+                let image = cart.find('.view img').attr('src');
+                let window = $('.msg');
+                window.find('.msg_product-name').text(name);
+                window.find('.msg_product-price span').text(price);
+                window.find('.msg_product-img img').attr('src', image);
+                window.fadeIn(300).delay(3000).fadeOut(300);
+            });
+            $('.close_button').on('click', function () {
+                console.log($(this).before());
+                $('.msg').fadeOut(300);
+            });
+            // //
+            // header menues //
+            $('#profile').mouseenter(function () {
+                $('#head1').show();
+            });
+            $('#profile,#head1').mouseleave(function () {
+                $('#head1').hide();
+            });
+
+
+            $('#help').mouseenter(function () {
+                $('#head2').show();
+            });
+            $('#help,#head2').mouseleave(function () {
+                $('#head2').hide();
+            });
+            // //
         })
     </script>
 {% endblock %}

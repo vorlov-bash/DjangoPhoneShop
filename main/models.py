@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from django.contrib.postgres.fields import JSONField
 
 
 # Create your models here.
@@ -41,3 +42,27 @@ class Phone(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Cart(models.Model):
+    user = models.CharField(max_length=100)
+    items = JSONField(default=dict)
+    cost = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.user} {self.items} {self.cost}'
+
+    def item_name(self):
+        return self.user
+
+    item_name.short_description = 'Клієнт'
+
+    def item_items(self):
+        return self.items
+
+    item_items.short_description = 'Корзина'
+
+    def item_cost(self):
+        return self.cost
+
+    item_cost.short_description = 'Загальна ціна'
