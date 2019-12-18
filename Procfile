@@ -1,2 +1,2 @@
-worker:python manage.py collectstatic
 web: gunicorn OnlineShop.wsgi
+worker: python manage.py collectstatic
