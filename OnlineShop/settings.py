@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e&ql__*2h^3pmxf4iko3n3*6%o0)o6qop6&d_)(ja#hb%de%b)'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'e&ql__*2h^3pmxf4iko3n3*6%o0)o6qop6&d_)(ja#hb%de%b)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True) 
 
 ALLOWED_HOSTS = []
 
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main.apps.MainConfig',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -76,14 +75,11 @@ WSGI_APPLICATION = 'OnlineShop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dakl1bv40johsn',
-        'USER': 'teraamhaexvygl',
-        'PASSWORD': '736f4d030e9694779bc65fe6fe32fc6c33176b623e96018e456ba013d0cdd0af',
-        'HOST': 'ec2-107-21-108-37.compute-1.amazonaws.com',
-        'POST': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
