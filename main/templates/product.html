@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ phone.name }}{% endblock %}
+{% block head %}
+    <style>
+        .wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            font-family: 'Ubuntu', sans-serif;
+            top: 50%;
+            left: 50%;
+
+            width: 170px;
+            height: 40px;
+            line-height: 1;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border: 3px solid #DD2B4C;
+            background: #fff;
+            color: #DD2B4C;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all .1s;
+        }
+
+        button:hover {
+            background: #DD2B4C;
+            color: #fff;
+        }
+
+        button span {
+            opacity: 1;
+            visibility: visible;
+            transition: all .1s;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container" id="content">
+        <div class="wrapper light_bg" data-reactid="119">
+            <div class="pd_base pd__wrap content-v1">
+
+                <div class="pd__header-product">
+                    <div class="pd__header-product__title"><h1 itemprop="name"
+                                                               class="pd__header-product__name">{{ phone.name }}</h1>
+
+                    </div>
+                </div>
+                <div class="pd product-view_pd base_wrapper_product-view">
+
+                    <div class="divide-pd-view">
+                        <div class="pd_left-column pd__left product-view-edited">
+                            <div class="photo_section photo_section--reverse product-view-photo_section">
+                                <div class="pd_main-photo">
+                                    <img src="{% static 'img/4abd99f940056a106e76d30d6cee7e2e.jpeg' %}" style="border: 1px solid grey">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="pd__right product-view-right-section product-view-edited">
+                            <div class="pd__price-info">
+                                <div>
+                                    <div class="pd__product-price--simple">
+                                        <div class="wrap-product-price">
+                                            <div class="pd__product-price-new">
+                                                <meta itemprop="price" content="349">
+                                                <span>349</span>грн
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="pd__sizes-info product-view">
+                                <div class="pd_info-price">
+                                    <div class="pd_variants">
+                                        <div class="pd_variants-size-title">
+                                            <div class="pd_subtitle">Размер памяти</div>
+                                            <div class="pd-info-wrap pd-info--hide"></div>
+                                        </div>
+                                        <div class="pd_size-buttons">
+                                            <div class="pd_variants-size-list"><span><div
+                                                    class="size_item"><span>32гб</span></div></span><span><div
+                                                    class="size_item"><span>64гб</span></div></span><span><div
+                                                    class="size_item"><span>128гб</span></div></span><span><div
+                                                    class="size_item"><span>256гб</span></div></span>
+                                                <!--add unavailable-->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pd__buy-info">
+                                <button class="buy">
+                                    <span>КУПИТЬ</span>
+                                </button>
+                            </div>
+                            <div>
+
+                                <div class="pd_properties-description main-spec">
+                                    <div class="pd_prop_h2">
+                                        <div class="pd_prop-title-about">Характеристики</div>
+                                    </div>
+                                    <div class="dots-pattern">
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Артикул товара</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.id }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Діагональ екрану, дюйми</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.diagonal }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Роздільна здатність екрану</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.resolution }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Оперативна пам'ять</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.ram }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Вбудована пам'ять</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.rom }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Ємність, мАг</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.mah }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Основна камера</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.main_cam }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Фронтальна камера</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.front_cam }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Тип матриці</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.matrix }}</div>
+                                        </div>
+                                        <div class="pd_prop-item">
+                                            <div class="wrap-content-title">
+                                                <div class="pd_prop-title">Процесор</div>
+                                                <div class="dots"></div>
+                                            </div>
+                                            <div class="pd_prop-val">{{ phone.cpu }}</div>
+                                        </div>
+                                    </div>
+
+                                </div><!-- react-empty: 10829 --></div>
+                            <div class="warning-wrapper"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function () {
+        $('.buy').click(function () {
+            $(this).find('span').html('<i class="fas fa-check-circle"></i>').fadeIn(2000);
+            $(this).css({'background': '#DD2B4C', 'color': '#fff'})
+        })
+    })
+    </script>
+{% endblock %}
