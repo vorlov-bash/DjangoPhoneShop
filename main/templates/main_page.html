@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/cart" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
+                        <a href="" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                         <strong>{{ product.price }}грн.</strong>
                                     </h4>
                                     <button type="button" class="btn btn-info btn-rounded text"
-                                            style="font-weight: bold">Купить
+                                            style="font-weight: bold; width: 60%">КУПИТЬ
                                     </button>
                                     <a class="btn-floating btn-lg btn-red" style="background-color: red;"
                                        data-id="{{ product.id }}">
@@ -111,6 +111,7 @@
             // //
             // cart window //
             $('.btn-info').on('click', function () {
+                $(this).prop('disabled', true);
                 let cart = $(this).parents().eq(2);
                 let name = cart.find('a.dark-grey-text').text();
                 let price = cart.find('h4 strong').text();
@@ -119,27 +120,25 @@
                 window.find('.msg_product-name').text(name);
                 window.find('.msg_product-price span').text(price);
                 window.find('.msg_product-img img').attr('src', image);
-                window.fadeIn(300).delay(3000).fadeOut(300);
+                $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+                let btn = $(this)
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart_add',
+                    data: {
+                        'name': name
+                    },
+                    success: function (data) {
+                        btn.html('ТОВАР В КОРЗИНЕ').css({'font-size': '12px'});
+                        window.fadeIn(300).delay(3000).fadeOut(300);
+                    }
+                });
+
+
             });
             $('.close_button').on('click', function () {
                 console.log($(this).before());
                 $('.msg').fadeOut(300);
-            });
-            // //
-            // header menues //
-            $('#profile').mouseenter(function () {
-                $('#head1').show();
-            });
-            $('#profile,#head1').mouseleave(function () {
-                $('#head1').hide();
-            });
-
-
-            $('#help').mouseenter(function () {
-                $('#head2').show();
-            });
-            $('#help,#head2').mouseleave(function () {
-                $('#head2').hide();
             });
             // //
         })
