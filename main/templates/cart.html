@@ -82,10 +82,11 @@
                 <div class="col mb-2">
                     <div class="row">
                         <div class="col-sm-12  col-md-6">
-                            <button class="btn btn-lg btn-light">Продолжить покупки</button>
+                            <a href="{% url 'main' %}" class="btn btn-lg btn-light">Продолжить покупки</a>
                         </div>
                         <div class="col-sm-12 col-md-6 text-right">
-                            <button class="btn btn-lg btn-lg btn-success text-uppercase">Подтвердить</button>
+                            <a href="{% url 'checkout' %}"
+                               class="btn btn-lg btn-lg btn-success text-uppercase">Подтвердить</a>
                         </div>
                     </div>
                 </div>

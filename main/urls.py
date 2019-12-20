@@ -10,6 +10,7 @@ urlpatterns = [
     path('cart_del', views.cart_delete, name='cart_del'),
     path('auth', views.is_auth, name='auth'),
     path('favo', views.favo_load, name='favo_load'),
-    path('favo_upd', views.favo, name='favo_upd')
-
+    path('favo_upd', views.favo, name='favo_upd'),
+    path('checkout', views.checkout, name='checkout'),
+    path('checkout_finish', views.checkout_finish, name='checkout_finish')
 ]

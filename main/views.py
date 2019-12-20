@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from .models import Phone, Cart, Favorites
 from django.http import JsonResponse
+import smtplib
+import requests
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 # Create your views here.
@@ -11,6 +16,7 @@ def item_list(request):
     if not request.session.session_key:
         request.session.save()
     data = Phone.objects.all()
+    cart = {}
     item = {}
     favo = {}
     try:
@@ -26,8 +32,16 @@ def item_list(request):
 
 
 def product(request, id):
-    phone = Phone.objects.get(id=id)
-    return render(request, 'product.html', {'phone': phone})
+    cart = {}
+    phone = {}
+    try:
+        phone = Phone.objects.get(id=id)
+        cart = Cart.objects.get(
+            user=request.user.username if request.user.is_authenticated else request.session.session_key)
+    except Cart.DoesNotExist:
+        pass
+    finally:
+        return render(request, 'product.html', {'phone': phone, 'cart': cart.items})
 
 
 def favo_load(request):
@@ -117,13 +131,49 @@ def cart_delete(request):
         phones = Cart.objects.get(user=request.user.username) if request.user.is_authenticated else Cart.objects.get(
             user=request.session.session_key)
         name = request.POST.get('name')
+        phone = Phone.objects.get(name=name)
         del phones.items[name]
         print(phones.items)
         cost = cart_cost(phones.items)
         print(cost)
         phones.cost = cost
         phones.save()
+        phone.save()
         return JsonResponse({'cost': cost})
+
+
+def checkout(request):
+    phones = Cart.objects.get(user=request.user.username) if request.user.is_authenticated else Cart.objects.get(
+        user=request.session.session_key)
+    for i, j in phones.items.items():
+        phone = Phone.objects.get(name=i)
+        phone.quantity -= int(j)
+        phone.save()
+    return render(request, 'checkout.html')
+
+
+def checkout_finish(request):
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "volodya.webpr@gmail.com"  # Enter your address
+    receiver_email = request.POST.get('email')  # Enter receiver address
+    password = 'eniOODD2qg'
+    html = '<h1>Дякуємо за заказ:<h1><p></p>'
+    x = Cart.objects.get(user=request.session.session_key)
+    for i, j in x.items.items():
+        html += f'<h2><stong>{i}: {j}</stong></h2><p></p>'
+    x.delete()
+    print(html)
+    msg = MIMEMultipart('alternative')
+    part0 = MIMEText(html, 'html')
+    msg.attach(part0)
+    msg["From"] = 'ShopCog'
+    msg["To"] = request.POST.get('firstName') + ' ' + request.POST.get('lastName')
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+    return redirect('/cart')
 
 
 # Not views

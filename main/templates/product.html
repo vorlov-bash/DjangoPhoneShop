@@ -89,11 +89,19 @@
 
                                 </div>
                             </div>
-                            <div class="pd__buy-info">
-                                <button class="buy">
-                                    <span>КУПИТЬ</span>
-                                </button>
-                            </div>
+                            {% if phone.name not in cart %}
+                                <div class="pd__buy-info">
+                                    <button class="buy">
+                                        <span>КУПИТЬ</span>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <div class="pd__buy-info">
+                                    <button class="buy active">
+                                        <span><i class="fas fa-check-circle"></i></span>
+                                    </button>
+                                </div>
+                            {% endif %}
                             <div style="margin-top: 100px">
                                 <div class="pd_properties-description main-spec">
                                     <div class="pd_prop_h2">
@@ -187,15 +195,31 @@
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active');
                     $(this).find('span').html('<i class="fas fa-check-circle"></i>').hide().fadeIn('slow');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/cart_create',
+                        data: {
+                            'name': $('.pd__header-product__name').text()
+                        },
+                        success: function (data) {
+                            $(this).addClass('active');
+                            $(this).find('span').html('<i class="fas fa-check-circle"></i>').hide().fadeIn('slow');
+                        }
+                    })
                 } else {
-                    $(this).removeClass('active');
-                    $(this).find('span').hide().text('КУПИТЬ').fadeIn('slow');
-                }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/cart_del',
+                        data: {
+                            'name': $('.pd__header-product__name').text()
+                        },
+                        success: function () {
+                            $(this).removeClass('active');
+                            $(this).find('span').hide().text('КУПИТЬ').fadeIn('slow');
+                        }
 
-            });
-            $('.size_item').click(function () {
-                $('.size_item').removeClass('active disabled');
-                $(this).addClass('active disabled');
+                    });
+                }
             })
         })
     </script>

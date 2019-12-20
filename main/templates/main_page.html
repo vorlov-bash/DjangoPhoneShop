@@ -68,7 +68,12 @@
                                     <h4>
                                         <strong>{{ product.price }}грн.</strong>
                                     </h4>
-                                    {% if product.name not in cart %}
+
+                                    {% if not product.quantity %}
+                                        <button type="button" class="btn btn-info btn-rounded text"
+                                                style="font-weight: bold; width: 60%" disabled>НЕТУ
+                                        </button>
+                                    {% elif product.name not in cart %}
                                         <button type="button" class="btn btn-info btn-rounded text"
                                                 style="font-weight: bold; width: 60%">КУПИТЬ
                                         </button>
