@@ -159,7 +159,8 @@ def checkout_finish(request):
     receiver_email = request.POST.get('email')  # Enter receiver address
     password = 'eniOODD2qg'
     html = '<h1>Дякуємо за заказ:<h1><p></p>'
-    x = Cart.objects.get(user=request.session.session_key)
+    x = Cart.objects.get(user=request.user.username) if request.user.is_authenticated else Cart.objects.get(
+        user=request.session.session_key)
     for i, j in x.items.items():
         html += f'<h3><stong>{i}: {j}</stong></h3><p></p>'
     html += f'<h2>Загальна вартість: {x.cost}</h2>'
