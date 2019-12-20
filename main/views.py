@@ -26,6 +26,13 @@ def product(request, id):
     phone = Phone.objects.get(id=id)
     return render(request, 'product.html', {'phone': phone})
 
+@csrf_exempt
+def is_auth(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'auth': 1})
+    else:
+        return JsonResponse({'auth': 0})
+
 
 @csrf_exempt
 def cart_create(request):
@@ -36,7 +43,6 @@ def cart_create(request):
     obj.items[item] = 1
     if not request.user.is_authenticated:
         request.session['cart_id'] = obj.id
-        print(request.session['cart_id'])
     for i, j in obj.items.items():
         phone = Phone.objects.get(name=i)
     cost = cart_cost(obj.items)
@@ -78,7 +84,9 @@ def cart_delete(request):
             user=request.session.session_key)
         name = request.POST.get('name')
         del phones.items[name]
+        print(phones.items)
         cost = cart_cost(phones.items)
+        print(cost)
         phones.cost = cost
         phones.save()
         return JsonResponse({'cost': cost})
@@ -86,7 +94,6 @@ def cart_delete(request):
 
 @login_required
 def logout(request):
-    print(request.user.username)
     logout(request)
     return render(request, 'main_page.html')
 
