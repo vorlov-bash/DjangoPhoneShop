@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+{% block body %}
+    <div class="msg">
+        <div class="msg_item info-msg ">
+            <div class="msg_item-wrap">
+                <div>
+                    <div class="msg_title">Товар был добавлен в корзину<span class="close_button">x</span></div>
+                    <div class="msg_content">
+                        <div class="msg_product">
+                            <div class="msg_product-content">
+                                <div class="msg_product-img"><img src="">
+                                </div>
+                                <div class="msg_product-info">
+                                    <div class="msg_product-name"></div>
+                                    <div class="msg_product-qua">Кол-во: 1шт.</div>
+                                    <div class="msg_product-price">Цена: <span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'cart' %}" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">ИЗБРАННОЕ</h1>
+        </div>
+    </section>
+    <main>
+        <div class="container">
+            <!--Navbar-->
+            <!--/.Navbar-->
+            <!--Section: Products v.3-->
+            <section class="text-center mt-5 mb-4">
+                <!--Grid row-->
+                <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+                    {% for product in data %}
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <!--Card-->
+                            <div class="card" data-id="{{ product|id }}" data-name="{{ product }}">
+                                <!--Card image-->
+                                <div class="view overlay">
+                                    <img src="{{ product|image }}"
+                                         class="card-img-top" alt="">
+                                    <a href="{% url 'product' product|id %}">
+                                        <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                                    </a>
+                                </div>
+                                <!--Card image-->
+                                <!--Card content-->
+                                <div class="card-body text-center">
+                                    <div class="name" style="width: 200px; height: 90px">
+                                        <h5>
+                                            <strong>
+                                                <a href="{% url 'product' product|id %}"
+                                                   class="dark-grey-text">{{ product }}</a>
+                                            </strong>
+                                        </h5>
+                                    </div>
+
+                                    <h4>
+                                        <strong>{{ product|price }}грн.</strong>
+                                    </h4>
+                                    <button type="button" class="btn btn-info btn-rounded text"
+                                            style="font-weight: bold; width: 60%" data-id="{{ product|id }}">КУПИТЬ
+                                    </button>
+                                    <a class="btn-floating btn-lg btn-red" style="background-color: red;"
+                                       data-id="{{ product|id }}">
+                                        <i class="fas fa-heart white-text" data-id="{{ product|id }}"
+                                           data-name="{{ product }}"></i></a>
+                                </div>
+                                <!--Card content-->
+                            </div>
+                            <!--Card-->
+                        </div>
+                        <!--Grid column-->
+                    {% endfor %}
+                </div>
+            </section>
+            <!--Section: Products v.3-->
+            <!--Pagination-->
+        </div>
+    </main>
+    <script>
+        // favorites //
+        $('.btn-floating').click(function (event) {
+            let id = $(this).attr('data-id');
+            let name = $(this).find('i').attr('data-name');
+            console.log(name);
+            let heart = $(`.fa-heart[data-id=${id}]`);
+            if (heart.hasClass('fas')) {
+                $(`.card[data-id=${id}]`).fadeOut(300, function () {
+                    $(this).remove()
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/favo_upd',
+                    data: {
+                        'name': name,
+                        'add': 0
+                    }
+                })
+            } else {
+                heart.removeClass('far').addClass('fas');
+                if ($(document).scrollTop() > 80) {
+                    $('.favo').css('visibility', 'visible').fadeOut(0).fadeIn(300).delay(300).fadeOut(300);
+                } else {
+                    $('.header-heart').addClass('red-text').fadeOut(0).fadeIn(100).delay(300).fadeOut(0).fadeIn(100).fadeOut(0, function () {
+                        $(this).removeClass('red-text');
+                        $(this).fadeIn(100)
+                    });
+                }
+            }
+
+        });
+        $('.btn-info').on('click', function () {
+            $(this).prop('disabled', true);
+            let id = $(this).attr('data-id');
+            let cart = $(this).parents().eq(2);
+            let name = cart.find('a.dark-grey-text').text();
+            let price = cart.find('h4 strong').text();
+            let image = cart.find('.view img').attr('src');
+            let window = $('.msg');
+            window.find('.msg_product-name').text(name);
+            window.find('.msg_product-price span').text(price);
+            window.find('.msg_product-img img').attr('src', image);
+            $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+            let btn = $(this);
+            $.ajax({
+                type: 'POST',
+                url: '/cart_create',
+                data: {
+                    'name': name,
+                    'delete': 1
+                },
+                success: function (data) {
+                    console.log(id);
+                    $(`.card[data-id=${id}]`).fadeOut(300, function () {
+                        $(this).remove()
+                    });
+                    window.fadeIn(300).delay(3000).fadeOut(300);
+                }
+            });
+
+
+        });
+        $('.close_button').on('click', function () {
+            console.log($(this).before());
+            $('.msg').fadeOut(300);
+        });
+        // //
+    </script>
+{% endblock %}
