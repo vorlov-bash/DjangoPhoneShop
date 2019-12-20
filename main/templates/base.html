@@ -47,7 +47,7 @@
                                 class="fas fa-heart header-heart"></i>Избранное</a>
                     </div>
                     {#                    <span class="header_quantity">4</span>#}
-                    <a href="" class="header_basket" data-reactid="30"><i class="fas fa-shopping-cart"></i><span
+                    <a href="{% url 'cart' %}" class="header_basket" data-reactid="30"><i class="fas fa-shopping-cart"></i><span
                             class="header_basket-title" data-reactid="31">Корзина</span></a>
                 </div>
             </div>
@@ -69,7 +69,7 @@
     $('#help').mouseenter(function () {
         $('#head2').show();
     });
-    $('#help #head2').mouseleave(function () {
+    $('#help,#head2').mouseleave(function () {
         $('#head2').hide();
     });
     // //

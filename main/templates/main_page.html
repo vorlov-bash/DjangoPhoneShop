@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
+                        <a href="{% url 'cart' %}" class="btn btn--make-order text-black-50">В КОРЗИНУ</a>
                     </div>
                 </div>
             </div>
@@ -67,9 +67,15 @@
                                     <h4>
                                         <strong>{{ product.price }}грн.</strong>
                                     </h4>
-                                    <button type="button" class="btn btn-info btn-rounded text"
-                                            style="font-weight: bold; width: 60%">КУПИТЬ
-                                    </button>
+                                    {% if product.name not in cart %}
+                                        <button type="button" class="btn btn-info btn-rounded text"
+                                                style="font-weight: bold; width: 60%">КУПИТЬ
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="btn btn-info btn-rounded text"
+                                                style="font-weight: bold; width: 60%; font-size: 12px" disabled>ТОВАР В КОРЗИНЕ
+                                        </button>
+                                    {% endif %}
                                     <a class="btn-floating btn-lg btn-red" style="background-color: red;"
                                        data-id="{{ product.id }}">
                                         <i class="far fa-heart white-text" data-id="{{ product.id }}"></i></a>
@@ -121,10 +127,10 @@
                 window.find('.msg_product-price span').text(price);
                 window.find('.msg_product-img img').attr('src', image);
                 $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
-                let btn = $(this)
+                let btn = $(this);
                 $.ajax({
                     type: 'POST',
-                    url: '/cart_add',
+                    url: '/cart_create',
                     data: {
                         'name': name
                     },
