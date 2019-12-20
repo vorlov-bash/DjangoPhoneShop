@@ -160,13 +160,13 @@
                         'name': name
                     },
                     success: function (data) {
+                        window.fadeIn(300).delay(3000).fadeOut(300);
                         btn.html('ТОВАР В КОРЗИНЕ').css({'font-size': '12px'});
-                        console.log(name);
-                        console.log($(`.btn-red[data-name=${name}]`).length);
-                        $(`.btn-red[data-name=${name}]`).fadeOut(300, function () {
+                        console.log(btn.parent().find('a').length);
+                        btn.parent().find('a').fadeOut(300, function () {
                             $(this).remove()
                         });
-                        window.fadeIn(300).delay(3000).fadeOut(300);
+
                     }
                 });
 
