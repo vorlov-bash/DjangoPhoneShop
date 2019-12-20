@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% load static %}
+{% block cssload %}{% static 'css/cart.css' %}{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{% if рhones.items %}КОРЗИНА{% else %}КОРЗИНА ПУСТАЯ{% endif %}</h1>
+        </div>
+    </section>
+    <div class="container mb-4">
+        {% if рhones.items %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Позиция</th>
+                                <th scope="col">Есть в наличии</th>
+                                <th scope="col" class="text-center">Кол-во</th>
+                                <th scope="col" class="text-right">Цена</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i, j in рhones.items.items %}
+                                <tr class="phone-item">
+                                    <td><img src="{{ i|image }}" style="width: 70px; height: 100px"></td>
+                                    <td>{{ i }}</td>
+                                    <td>{{ i|instock }}</td>
+                                    <td>
+                                        <select class="form-control quantity" data-name="{{ i }}">
+                                            {% for k in i|quantity|range_array %}
+                                                {% if j == k %}
+                                                    <option id="selector" selected>{{ forloop.counter }}</option>
+                                                {% else %}
+                                                    <option id="selector">{{ forloop.counter }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td class="text-right">{{ i|price }} грн</td>
+                                    <td class="text-right">
+                                        <button class="btn btn-sm btn-danger" data-name="{{ i }}"><i
+                                                class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Товары:</td>
+                                <td class="text-right phone-cost">{{ рhones.cost }} грн</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Доставка:</td>
+                                <td class="text-right">40грн</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Всего:</strong></td>
+                                <td class="text-right total"><strong>{{ рhones.cost|total }} грн</strong></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-sm-12  col-md-6">
+                            <button class="btn btn-lg btn-light">Продолжить покупки</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <button class="btn btn-lg btn-lg btn-success text-uppercase">Подтвердить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.quantity').change(function () {
+                let quantity = $(this).val();
+                let name = $(this).attr('data-name');
+                let total = parseInt($('.total').text());
+                $('.phone-cost').html('<i class="fas fa-spinner fa-pulse"></i>');
+                $('.total').html('<i class="fas fa-spinner fa-pulse"></i>');
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart_upd',
+                    data: {
+                        'name': name,
+                        'quantity': quantity
+                    },
+                    success: function (data) {
+                        $('.phone-cost').text(parseInt(data.cost) + ' грн');
+                        $('.total').text(parseInt(data.cost) + 40 + ' грн')
+                    }
+                })
+            });
+            $('.btn-danger').click(function () {
+                let name = $(this).attr('data-name');
+                $(this).parents().eq(1).remove().fadeOut(300);
+                if (!$('tbody').find(`tr[class="phone-item"]`).length) {
+                    $('.row').fadeOut(300, function () {
+                        $(this).remove(300)
+                    });
+                    $('.jumbotron-heading').text('КОРЗИНА ПУСТА')
+                }
+                $('.phone-cost').html('<i class="fas fa-spinner fa-pulse"></i>');
+                $('.total').html('<i class="fas fa-spinner fa-pulse"></i>');
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart_del',
+                    data: {
+                        'name': name,
+                    },
+                    success: function (data) {
+                        $('.phone-cost').text(parseInt(data.cost) + ' грн');
+                        $('.total').text(parseInt(data.cost) + 40 + ' грн')
+                    }
+                })
+
+            })
+        })
+    </script>
+{% endblock %}
