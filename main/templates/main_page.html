@@ -29,6 +29,7 @@
     <div class="favo" style="position: fixed; right: 9%; top: 20%; visibility: hidden">
         <i class="fas fa-heart fa-3x red-text"></i>
     </div>
+
     <main>
         <div class="container">
 
@@ -73,12 +74,16 @@
                                         </button>
                                     {% else %}
                                         <button type="button" class="btn btn-info btn-rounded text"
-                                                style="font-weight: bold; width: 60%; font-size: 12px" disabled>ТОВАР В КОРЗИНЕ
+                                                style="font-weight: bold; width: 60%; font-size: 12px" disabled>ТОВАР В
+                                            КОРЗИНЕ
                                         </button>
                                     {% endif %}
-                                    <a class="btn-floating btn-lg btn-red" style="background-color: red;"
-                                       data-id="{{ product.id }}">
-                                        <i class="far fa-heart white-text" data-id="{{ product.id }}"></i></a>
+                                    {% if product.name not in cart %}
+                                        <a class="btn-floating btn-lg btn-red" style="background-color: red;"
+                                           data-name="{{ product.name }}" data-id="{{ product.id }}">
+                                            <i class="{% if product.name in favo %}fas{% else %}far{% endif %} fa-heart white-text"
+                                               data-id="{{ product.id }}"></i></a>
+                                    {% endif %}
                                 </div>
                                 <!--Card content-->
                             </div>
@@ -97,20 +102,40 @@
         $(document).ready(function () {
             // favorites //
             $('.btn-floating').click(function (event) {
+                let name = $(this).attr('data-name');
                 let id = $(this).attr('data-id');
                 let heart = $(`.fa-heart[data-id=${id}]`);
                 if (heart.hasClass('fas')) {
-                    heart.removeClass('fas').addClass('far')
+                    heart.removeClass('fas').addClass('far');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/favo_upd',
+                        data: {
+                            'add': 0,
+                            'name': name
+                        }
+                    })
                 } else {
                     heart.removeClass('far').addClass('fas');
-                    if ($(document).scrollTop() > 80) {
-                        $('.favo').css('visibility', 'visible').fadeOut(0).fadeIn(300).delay(300).fadeOut(300);
-                    } else {
-                        $('.header-heart').addClass('red-text').fadeOut(0).fadeIn(100).delay(300).fadeOut(0).fadeIn(100).fadeOut(0, function () {
-                            $(this).removeClass('red-text');
-                            $(this).fadeIn(100)
-                        });
-                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/favo_upd',
+                        data: {
+                            'add': 1,
+                            'name': name
+                        },
+                        success: function (data) {
+                            if ($(document).scrollTop() > 80) {
+                                $('.favo').css('visibility', 'visible').fadeOut(0).fadeIn(300).delay(300).fadeOut(300);
+                            } else {
+                                $('.header-heart').addClass('red-text').fadeOut(0).fadeIn(100).delay(300).fadeOut(0).fadeIn(100).fadeOut(0, function () {
+                                    $(this).removeClass('red-text');
+                                    $(this).fadeIn(100)
+                                });
+                            }
+
+                        }
+                    });
                 }
 
             });
@@ -136,6 +161,11 @@
                     },
                     success: function (data) {
                         btn.html('ТОВАР В КОРЗИНЕ').css({'font-size': '12px'});
+                        console.log(name);
+                        console.log($(`.btn-red[data-name=${name}]`).length);
+                        $(`.btn-red[data-name=${name}]`).fadeOut(300, function () {
+                            $(this).remove()
+                        });
                         window.fadeIn(300).delay(3000).fadeOut(300);
                     }
                 });

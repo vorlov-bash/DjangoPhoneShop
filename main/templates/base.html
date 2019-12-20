@@ -22,28 +22,14 @@
                 <div class="header-info_left" data-reactid="10">
                     <a href="{% url 'main' %}" class="header_logo"><img src="{% static 'img/large_shopcog.png' %}"
                                                                         style="width: 200px; height: 100px"></a></div>
-                <div class="header-info_right" style="width: 700px">
-                    <div class="header-menu_item" data-reactid="20" id="profile">
-                        <div class="header_profile top_menu_item" id="profile"><i class="fas fa-user"></i> Профиль</div>
-                        <div class="header-drop_content" id="head1">
-                            <div class="header-drop_wrap">
-                                <a href="{% url 'logout' %}" class="header-drop_item logout-link">Выйти</a></div>
-                        </div>
-                    </div>
+                <div class="header-info_right" style="width: 500px">
                     <div class="header-menu_item" data-reactid="23" id="help">
                         <div class="header_profile top_menu_item"><i class="fas fa-question"></i> Помощь</div>
                         <div class="header-drop_content" id="head2">
-                            <div class="header-drop_wrap">
-                                <a href="/page/support/contacts/"
-                                   class="header-drop_item header__help-item">Контакты</a>
-                                <a href="/page/support/products-and-orders/"
-                                   class="header-drop_item header__help-item">Товары и заказы</a>
-                                <a href="/page/support/your-size/" class="header-drop_item header__help-item">Как
-                                    выбрать размер</a></div>
                         </div>
                     </div>
                     <div class="header-menu_item" data-reactid="26">
-                        <a href="" class="top_menu_item" style="text-decoration: none"><i
+                        <a href="{% url 'favo_load' %}" class="top_menu_item" style="text-decoration: none"><i
                                 class="fas fa-heart header-heart"></i>Избранное</a>
                     </div>
                     {#                    <span class="header_quantity">4</span>#}
@@ -60,15 +46,6 @@
 <script type="text/javascript">
     // header menues //
     $(document).ready(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/auth',
-            success: function (data) {
-                if(!data.auth){
-                    $('#head1').remove()
-                }
-            }
-        });
         $('#profile').mouseenter(function () {
             $('#head1').show();
         });

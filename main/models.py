@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, ArrayField
 
 
 # Create your models here.
@@ -66,3 +66,8 @@ class Cart(models.Model):
         return self.cost
 
     item_cost.short_description = 'Загальна ціна'
+
+
+class Favorites(models.Model):
+    user = models.CharField(max_length=100)
+    items = ArrayField(models.CharField(max_length=100))

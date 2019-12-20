@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .models import Phone, Cart
+from .models import Phone, Cart, Favorites
 from django.http import JsonResponse
 
 
@@ -12,19 +12,50 @@ def item_list(request):
         request.session.save()
     data = Phone.objects.all()
     item = {}
+    favo = {}
     try:
         cart = Cart.objects.get(
             user=request.user.username if request.user.is_authenticated else request.session.session_key)
+        favo = Favorites.objects.get(
+            user=request.user.username if request.user.is_authenticated else request.session.session_key)
         item = cart.items
-    except Cart.DoesNotExist:
+    except Cart.DoesNotExist or Favorites.DoesNotExist:
         pass
     finally:
-        return render(request, 'main_page.html', {'data': data, 'cart': item})
+        return render(request, 'main_page.html', {'data': data, 'cart': item, 'favo': favo.items})
 
 
 def product(request, id):
     phone = Phone.objects.get(id=id)
     return render(request, 'product.html', {'phone': phone})
+
+
+def favo_load(request):
+    obj = favo_check(request.user.username) if request.user.is_authenticated else favo_check(
+        request.session.session_key)
+    print(obj.items)
+    return render(request, 'favo.html', {'data': obj.items})
+
+
+@csrf_exempt
+def favo(request):
+    item = request.POST.get('name')
+    obj = favo_check(request.user.username) if request.user.is_authenticated else favo_check(
+        request.session.session_key)
+    if int(request.POST.get('add')):
+        obj.items.append(item)
+        if not request.user.is_authenticated:
+            request.session['array_id'] = obj.id
+    elif not int(request.POST.get('add')):
+        print(obj.items)
+        obj.items.remove(item)
+        print(obj.items)
+        obj.save()
+        if not request.user.is_authenticated:
+            request.session['array_id'] = obj.id
+    obj.save()
+    return JsonResponse({})
+
 
 @csrf_exempt
 def is_auth(request):
@@ -37,17 +68,20 @@ def is_auth(request):
 @csrf_exempt
 def cart_create(request):
     item = request.POST.get('name')
-    quantity = request.POST.get('quantity')
     obj = cart_check(request.user.username) if request.user.is_authenticated else cart_check(
         request.session.session_key)
     obj.items[item] = 1
     if not request.user.is_authenticated:
         request.session['cart_id'] = obj.id
-    for i, j in obj.items.items():
-        phone = Phone.objects.get(name=i)
     cost = cart_cost(obj.items)
     obj.cost = cost
     obj.save()
+    if request.POST.get('delete'):
+        favo = favo_check(request.user.username) if request.user.is_authenticated else favo_check(
+            request.session.session_key)
+        favo.items.remove(item)
+        print(favo.items)
+        favo.save()
     return JsonResponse({'success': 1})
 
 
@@ -92,12 +126,6 @@ def cart_delete(request):
         return JsonResponse({'cost': cost})
 
 
-@login_required
-def logout(request):
-    logout(request)
-    return render(request, 'main_page.html')
-
-
 # Not views
 def cart_cost(cart_item):
     cost = 0
@@ -114,3 +142,12 @@ def cart_check(username):
     except Cart.DoesNotExist:
         cart_obj = Cart.objects.create(user=username, items={}, cost=0)
         return cart_obj
+
+
+def favo_check(username):
+    try:
+        favo_obj = Favorites.objects.get(user=username)
+        return favo_obj
+    except Favorites.DoesNotExist:
+        favo_obj = Favorites.objects.create(user=username, items=[])
+        return favo_obj
