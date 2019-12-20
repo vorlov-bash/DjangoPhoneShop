@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="loader"></div>
+    <main id="main" role="main">
+        <section id="checkout-banner">
+            <div class="container py-5 text-center">
+                <i class="fa fa-credit-card fa-3x text-light"></i>
+                <h2 class="my-3">Checkout form</h2>
+            </div>
+        </section>
+        <section id="checkout-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="mb-3">Інформація</h4>
+                        <form class="needs-validation" novalidate method="post" action="{% url 'checkout_finish' %}">{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">Ім'я</label>
+                                    <input type="text" class="form-control" name="firstName" placeholder="" value="" required>
+                                    <div class="invalid-feedback">
+                                        Введіть ім'я
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Фамілія</label>
+                                    <input type="text" class="form-control" name="lastName" placeholder="" value="" required>
+                                    <div class="invalid-feedback">
+                                        Введіть фамілію
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email">Email
+                                    <span class="text-muted">(На вибір)</span>
+                                </label>
+                                <input type="email" class="form-control" name="email" placeholder="you@example.com">
+                                <div class="invalid-feedback">
+                                    Вкажіть пошту, для отримання заказу на почту
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address">Адреса</label>
+                                <input type="text" class="form-control" id="address" placeholder="вул Янгеля 22" required>
+                                <div class="invalid-feedback">
+                                    Введіть вашу вулицю.
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="state">Місто</label>
+                                    <select class="custom-select d-block w-100" id="state" required>
+                                        <option value="">Вибрати...</option>
+                                        <option>Київ</option>
+                                        <option>Тернопіль</option>
+                                        <option>Вінниця</option>
+                                        <option>Умань</option>
+                                        <option>Львів</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Вкажіть дійсне місто
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="zip">Zip</label>
+                                    <input type="text" class="form-control" id="zip" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Zip code required.
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">
+                                <i class="fa fa-credit-card"></i> Continue to checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+    </script>
+{% endblock %}
