@@ -161,7 +161,8 @@ def checkout_finish(request):
     html = '<h1>Дякуємо за заказ:<h1><p></p>'
     x = Cart.objects.get(user=request.session.session_key)
     for i, j in x.items.items():
-        html += f'<h2><stong>{i}: {j}</stong></h2><p></p>'
+        html += f'<h3><stong>{i}: {j}</stong></h3><p></p>'
+    html += f'<h2>Загальна вартість: {x.cost}</h2>'
     x.delete()
     print(html)
     msg = MIMEMultipart('alternative')
