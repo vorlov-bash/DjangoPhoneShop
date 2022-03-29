@@ -15,7 +15,7 @@ mysql-connector==2.2.9
 mysql-connector-python==8.0.17
 numpy==1.16.4
 pandas==0.25.2
-paramiko==2.6.0
+paramiko==2.10.1
 Pillow==6.2.1
 psycopg2==2.8.4
 pycparser==2.19
